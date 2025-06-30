@@ -5,9 +5,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 class AIAssistant {
-    private static ArrayList<UserProfile> users;
-    private UserProfile activeUser;
-    private boolean assistantActive;
+    protected ArrayList<UserProfile> users = new ArrayList<>();
+    protected UserProfile activeUser;
+    protected boolean assistantActive;
     private final String[] jokes = {
         "Why don't skeletons fight each other? Because they don't have the guts!",
         "What's brown and sticky? A stick!",
@@ -20,9 +20,25 @@ class AIAssistant {
     // constructor for AIAssistant Object
     public AIAssistant() {
         assistantActive = true;
-        users = new ArrayList<>();
     }
 
+    /**************************
+     * function: createProfile
+     * 
+     *************************/
+    private UserProfile createProfile(String n, int a) {
+        UserProfile currentUser = new UserProfile(n, a);
+        currentUser.setMainAI(this);
+
+        // create a musicAssistant "personality"
+        MusicAssistant newM = new MusicAssistant();
+        currentUser.setMusicAI(newM);
+
+        // create a fitnessAssistant "personality"
+        // currentUser.setFitnessAssistant(new FitnessAssistant());
+        this.users.add(currentUser);
+        return currentUser;
+    }
 
     // "getter" methods for AIAssistant variables
 
@@ -35,9 +51,6 @@ class AIAssistant {
     }
 
     
-
-
-
     // "setter" methods for AIAssistant variables
 
     public void setCurrentUser(UserProfile user) {
@@ -52,30 +65,40 @@ class AIAssistant {
     
     // all available functions for AI to perform for a user
 
-    private UserProfile createProfile(String n, int a) {
-        UserProfile currentUser = new UserProfile(n, a);
-        users.add(currentUser);
-        return currentUser;
-    }
-
-    private void greetUser() {
+    /**************************
+     * function: greetUser
+     * 
+     *************************/
+    protected void greetUser() {
         System.out.println("Good day, " + activeUser.getName() + "!");
     }
 
-    private String getDate() {
+    /**************************
+     * function: getDate
+     * 
+     *************************/
+    protected String getDate() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter pattern = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
         String formattedDate = currentDate.format(pattern);
         return formattedDate;
     }
 
-    private String getJoke() {
+    /**************************
+     * function: getJoke
+     * 
+     *************************/
+    protected String getJoke() {
         Random r = new Random();
         int jokeIndex = (int) r.nextInt(jokes.length);
         return jokes[jokeIndex];    
     }
 
-    private void upgradeAccount() {
+    /**************************
+     * function: upgradeAccount
+     * 
+     *************************/
+    protected void upgradeAccount() {
         Scanner sc = new Scanner(System.in);
         if(!this.activeUser.getAccountDetails()) {
             System.out.print("Are you sure you want to upgrade your account? The card on file will be charged. ");
@@ -95,6 +118,10 @@ class AIAssistant {
         }
     }
 
+    /**************************
+     * function: createNewAccount
+     * 
+     *************************/
     public void createNewAccount() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Please enter the name to be associated with the account: ");
@@ -105,34 +132,45 @@ class AIAssistant {
         sc.nextLine();
 
         UserProfile currentUser = this.createProfile(name, age);
+        // users.add(currentUser);
         // "log profile in"
         this.setCurrentUser(currentUser);
         System.out.println("\nAmazing, I'll go ahead and create your account for you, " + this.getCurrentUser().getName());
+        this.getCurrentUser().generatePreferences();
     }
 
-    private void switchAccounts() {
+    /**************************
+     * function: switchAccounts
+     * 
+     *************************/
+    protected void switchAccounts() {
         Scanner sc = new Scanner(System.in);
         if (users.size() > 1) {
             System.out.println("Here is a list of all user accounts available to switch into: ");
-            for(UserProfile user : users) {
+            for(UserProfile user : this.users) {
                 System.out.println(user.getName());
             }
 
             System.out.print("\nWhich account were you wanting to change into? ");
             String swapUser = sc.nextLine();
-        
-            for(UserProfile user : users) {
-                if(swapUser.equals(user.getName())) {
-                    this.setCurrentUser(user);
-                    break;
-                }
-            }
 
-            if(this.getCurrentUser().getName().equals(swapUser)) {
-                System.out.println("Alright, I've logged you in under " + this.getCurrentUser().getName() + "!");
+            if (swapUser.equals(this.getCurrentUser().getName())) {
+                System.out.println("You are already logged in under " + swapUser + "!");
             }
             else {
-                System.out.println("Sorry, I was unable to find an account associated with that name. Maybe try a different name or create a new account?");
+                for(UserProfile user : this.users) {
+                    if(swapUser.equals(user.getName())) {
+                        this.setCurrentUser(user);
+                        break;
+                    }
+                }
+
+                if(this.getCurrentUser().getName().equals(swapUser)) {
+                    System.out.println("Alright, I've logged you in under " + this.getCurrentUser().getName() + "!");
+                }
+                else {
+                    System.out.println("Sorry, I was unable to find an account associated with that name. Maybe try a different name or create a new account?");
+                }
             }
         }
         else {
@@ -141,7 +179,10 @@ class AIAssistant {
         
     }
 
-    
+    /**************************
+     * function: handleRequest
+     * 
+     *************************/
     public void handleRequest(UserProfile u, String command) {
         Scanner sc = new Scanner(System.in);
         // use a switch to parse through user input to validate a command
@@ -153,9 +194,10 @@ class AIAssistant {
                          - Greet me
                          - Upgrade my Account
                          - Create a New Account
+                         - Switch Accounts
                          - Tell Me the Date
                          - Tell Me a Joke
-                         - Recommend an Artist
+                         - Recommend a Song
                          - Recommend a Workout
                     """);
                 }
@@ -177,13 +219,15 @@ class AIAssistant {
                 }
 
                 // handled by musicAssistant AIAssistant subclass (to-do)
-                case "RECOMMEND AN ARTIST" -> {
-                    // AIAssistant newMusicAI = new MusicAssistant();
+                case "RECOMMEND A SONG" -> {
+                    this.getCurrentUser().getMusicAI().setCurrentUser(this.getCurrentUser());
+                    this.getCurrentUser().getMusicAI().greetUser();
+                    this.getCurrentUser().getMusicAI().recommendSong();
                 }
 
                 // handled by fitnessAssistant AIAssistant subclass (to-do)
                 case "RECOMMEND A WORKOUT" -> {
-                    // AI Assistant newFitnessAI = new FitnessAssistant();
+
                 }
 
                 default -> {
@@ -209,10 +253,4 @@ class AIAssistant {
         }
 
     }
-    
-    /*
-    public void generateResponse(UserProfile u) {
-
-    }
-    */
     

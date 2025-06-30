@@ -1,36 +1,36 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserProfile {
+class UserProfile {
     private String name;
     @SuppressWarnings("unused")
     private final int age;
-    @SuppressWarnings("FieldMayBeFinal")
-    private HashMap<String, String> preferences = new HashMap<>();
+    private final HashMap<String, ArrayList<String>> preferences = new HashMap<>();
     private boolean isPremium;
-    // private AIAssistant AI;
+    private AIAssistant AI;
+    private MusicAssistant MusicAI;
+    // private FitnessAssistant FitnessAI;
 
     // Constructor for a UserProfile Object with necessary details
     // **WANT TO MAKE PRIVATE, LOOK AT PACKAGES IN JAVA**
-    public UserProfile(String n, int a) {
-        this.name = n;
-        this.age = a;
+    public UserProfile(String name, int age) {
+        this.name = name;
+        this.age = age;
         this.isPremium = false;
         // this.AI = new AIAssistant(this);
     }
+
 
     /**************************
      * function: generatePreferences
      * 
      *************************/
     public void generatePreferences() {
-        preferences.put("Language", "English");
-        preferences.put("Visual", "Light Mode");
-        preferences.put("Time Zone", "US Pacific");
-
+        ArrayList<String> userGenres = new ArrayList<>();
+        ArrayList<String> userWorkouts = new ArrayList<>();
         // **implement ability for value to be an ArrayList of Strings of genres corresponding to user request and AI responses**
-        preferences.put("Genres", null);
-        preferences.put("Workouts", null);
-        // potentially add more??
+        preferences.put("Genres", userGenres);
+        preferences.put("Workouts", userWorkouts);
     }
 
     // "Getter" methods for UserProfile details
@@ -43,10 +43,17 @@ public class UserProfile {
         return this.isPremium;
     }
 
-    public void getPreferences() {
-        for(String key : preferences.keySet()) {
-            System.out.println(key + ": " + preferences.get(key));
-        }
+    public ArrayList<String> getPreferences(String key) {
+        return preferences.get(key);
+    }
+
+
+    public AIAssistant getMainAI() {
+        return this.AI;
+    }
+
+    public MusicAssistant getMusicAI() {
+        return this.MusicAI;
     }
 
 
@@ -62,7 +69,15 @@ public class UserProfile {
     }
 
     public void setPreference(String key, String value) {
-        preferences.replace(key, value);
+        preferences.get(key).add(value);
+    }
+
+    public void setMainAI(AIAssistant a) {
+        this.AI = a;
+    }
+
+    public void setMusicAI(MusicAssistant m) {
+        this.MusicAI = m;
     }
 
 }
