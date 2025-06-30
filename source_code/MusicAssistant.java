@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 
 class MusicAssistant extends AIAssistant {
-    // need to put in actual songs, just filler spots for now
+    // categorized song list based on genre, represented by 2-D String Array
     final static private String [][] categorizedSongs = {
         // "pop" category
         {"Song1", "Song2", "Song3", "Song4", "Song5"},
@@ -46,10 +46,13 @@ class MusicAssistant extends AIAssistant {
         System.out.print("What kind of genre would you like to hear from? (Or say surprise me): ");
         String choice = sc.nextLine();
         choice = choice.toUpperCase();
+
+        // check to see if this is a new choice that user hasn't made before, and if it is new add it to preferences
         if(!this.getCurrentUser().getPreferences("Genres").contains(choice) && !choice.equals("SURPRISE ME")) {
             this.getCurrentUser().getPreferences("Genres").add(choice);
         }
 
+        // pick a random song based on previous choices, or a completely random song from all songs if no preferences are stored
         if(choice.equals("SURPRISE ME")) {
             choice = this.getGenreByPreference();
         }

@@ -35,7 +35,9 @@ class AIAssistant {
         currentUser.setMusicAI(newM);
 
         // create a fitnessAssistant "personality"
-        // currentUser.setFitnessAssistant(new FitnessAssistant());
+        FitnessAssistant newF = new FitnessAssistant();
+        currentUser.setFitnessAI(newF);
+
         this.users.add(currentUser);
         return currentUser;
     }
@@ -227,7 +229,9 @@ class AIAssistant {
 
                 // handled by fitnessAssistant AIAssistant subclass (to-do)
                 case "RECOMMEND A WORKOUT" -> {
-
+                    this.getCurrentUser().getFitnessAI().setCurrentUser(this.getCurrentUser());
+                    this.getCurrentUser().getFitnessAI().greetUser();
+                    this.getCurrentUser().getFitnessAI().recommendWorkout();
                 }
 
                 default -> {

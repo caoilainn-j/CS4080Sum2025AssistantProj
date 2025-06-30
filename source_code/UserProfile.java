@@ -9,15 +9,13 @@ class UserProfile {
     private boolean isPremium;
     private AIAssistant AI;
     private MusicAssistant MusicAI;
-    // private FitnessAssistant FitnessAI;
+    private FitnessAssistant FitnessAI;
 
     // Constructor for a UserProfile Object with necessary details
-    // **WANT TO MAKE PRIVATE, LOOK AT PACKAGES IN JAVA**
     public UserProfile(String name, int age) {
         this.name = name;
         this.age = age;
         this.isPremium = false;
-        // this.AI = new AIAssistant(this);
     }
 
 
@@ -30,7 +28,7 @@ class UserProfile {
         ArrayList<String> userWorkouts = new ArrayList<>();
         // **implement ability for value to be an ArrayList of Strings of genres corresponding to user request and AI responses**
         preferences.put("Genres", userGenres);
-        preferences.put("Workouts", userWorkouts);
+        preferences.put("Workout Types", userWorkouts);
     }
 
     // "Getter" methods for UserProfile details
@@ -56,6 +54,10 @@ class UserProfile {
         return this.MusicAI;
     }
 
+    public FitnessAssistant getFitnessAI() {
+        return this.FitnessAI;
+    }
+
 
 
     // "Setter" methods for adjusting UserProfile details
@@ -78,6 +80,10 @@ class UserProfile {
 
     public void setMusicAI(MusicAssistant m) {
         this.MusicAI = m;
+    }
+
+    public void setFitnessAI(FitnessAssistant f) {
+        this.FitnessAI = f;
     }
 
 }
