@@ -1,6 +1,17 @@
+/***********************************************************************
+* Caoilainn Johnsson
+* BroncoID: 017558918
+* CS 4080, Summer 1 2025
+* Assignment 2/3 : Design and Implement an AI Assistant
+* MusicAssistant Class: Contains the Constructor for a MusicAssistant object,
+                        as well as the necessary methods to read and manipualte
+                        UserProfile data and inputs; also is the main force in
+                        keeping track of and recording UserProfile preferences of songs
+                        based on the choices / requests they make in their methods
+************************************************************************/
+
 import java.util.Random;
 import java.util.Scanner;
-
 
 class MusicAssistant extends AIAssistant {
     // categorized song list based on genre, represented by 2-D String Array
@@ -23,6 +34,7 @@ class MusicAssistant extends AIAssistant {
     }
 
     @Override
+    // same documenation purposes as in AIAssistant, simply meant to greet the user in a unique way (hence the override)
     protected void greetUser() {
         System.out.println("\nGreat day for some tunes, " + activeUser.getName() + "!");
     }
@@ -30,7 +42,11 @@ class MusicAssistant extends AIAssistant {
     
     /**************************
      * function: recommendSong
-     * 
+     * purpose: will recommend a song from an existing String[][] variable that can depend on user request and/or user
+     *          preferences (if they exist); is called by the AIAssistant class when a user requests that they want a
+     *          song recommended
+     * parameters: none
+     * return type: void; prints the song recommended based on user input / preferences
      *************************/
     protected void recommendSong() {
         Scanner sc = new Scanner(System.in);
@@ -58,6 +74,7 @@ class MusicAssistant extends AIAssistant {
         }
 
         String pickedSong;
+        // filters through each possible choice the user can make for song category
         switch (choice) {
             case "POP" -> {
                 pickedSong = this.getSong(0);
@@ -75,6 +92,7 @@ class MusicAssistant extends AIAssistant {
                 pickedSong = this.getSong(4);
             }
             case "No previous preferences found" -> {
+                // recommends a completely random song if a user has no recorded preferences in its variable
                 int randomIndex1 = (int) r.nextInt(categorizedSongs.length);
                 pickedSong = this.getSong(randomIndex1);
                 System.out.println("Since you have no previous preferences, we recommend you " + pickedSong);
@@ -84,9 +102,12 @@ class MusicAssistant extends AIAssistant {
             }
         }
 
+        // MusicAssistant read in a value that did not match any currently existing genres
         if(pickedSong.equals("NA")) {
             System.out.println("Sorry, I didn't understand your answer. Please try again.");
         }
+        // a song was able to be picked based on the user's current request, or a "surprise me" request was made
+        // and the user had existing preferences stored in its variable
         else if(!choice.equals("No previous preferences found")){
             System.out.println("Based on your previous preferences, I think you will like " + pickedSong);
         }
@@ -94,7 +115,10 @@ class MusicAssistant extends AIAssistant {
 
     /**************************
      * function: getSong
-     * 
+     * purpose: fetches the song from the String[][] categorizedSongs variable randomly, 
+     *          utilizing the built-in java import Random()
+     * parameter: int indexOfGenre, the row in which the genre the user picked is found (predetermined)
+     * return type: String, the song found within the array found at the specified index
      *************************/
     private String getSong(int indexOfGenre) {
         Random r = new Random();
@@ -104,7 +128,10 @@ class MusicAssistant extends AIAssistant {
 
     /**************************
      * function: getGenreByPreference
-     * 
+     * purpose: goes to the UserProfile's variable preference, searches by the key Genre, and picks a random
+     *          genre preference found within the ArrayList found at that key
+     * parameter: none
+     * return type: String, the genre found at a random point in the UserProfile's variable preferences
      *************************/
     private String getGenreByPreference() {
         if (!this.getCurrentUser().getPreferences("Genres").isEmpty()) {

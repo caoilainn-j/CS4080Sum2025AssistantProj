@@ -1,10 +1,18 @@
+/***********************************************************************
+* Caoilainn Johnsson
+* BroncoID: 017558918
+* CS 4080, Summer 1 2025
+* Assignment 2/3 : Design and Implement an AI Assistant
+* UserProfile Class: Contains the Constructor for a UserProfile object, as 
+                     well as the necessary functions to access its variables/
+                     data used in other classes and their functions
+************************************************************************/
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 class UserProfile {
     private String name;
-    @SuppressWarnings("unused")
-    private final int age;
     private final HashMap<String, ArrayList<String>> preferences = new HashMap<>();
     private boolean isPremium;
     private AIAssistant AI;
@@ -12,16 +20,20 @@ class UserProfile {
     private FitnessAssistant FitnessAI;
 
     // Constructor for a UserProfile Object with necessary details
-    public UserProfile(String name, int age) {
+    public UserProfile(String name) {
         this.name = name;
-        this.age = age;
         this.isPremium = false;
     }
 
 
     /**************************
      * function: generatePreferences
-     * 
+     * purpose: creates the ArrayLists meant to store the respective genres / workout types that a user requests to see / hear from
+     *          (implemented in the MusicAssistant / FitnessAssistant classes) in a HashMap mapping the key (either "Genres" or 
+     *          "Workout Types") to an ArrayList conatining the requested types of music / workouts (se MusicAssistant and FitnessAssistant
+     *          for further documentation)
+     * parameters: none
+     * return type: void; edits the preference variable for a UserProfile object
      *************************/
     public void generatePreferences() {
         ArrayList<String> userGenres = new ArrayList<>();
@@ -44,7 +56,6 @@ class UserProfile {
     public ArrayList<String> getPreferences(String key) {
         return preferences.get(key);
     }
-
 
     public AIAssistant getMainAI() {
         return this.AI;

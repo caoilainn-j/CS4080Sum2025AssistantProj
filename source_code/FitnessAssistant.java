@@ -1,3 +1,15 @@
+/***********************************************************************
+* Caoilainn Johnsson
+* BroncoID: 017558918
+* CS 4080, Summer 1 2025
+* Assignment 2/3 : Design and Implement an AI Assistant
+* FitnessAssistant Class: Contains the Constructor for a FitnessAssistant object,
+                          as well as the necessary methods to read and manipualte
+                          UserProfile data and inputs; also is the main force in
+                          keeping track of and recording UserProfile preferences of workouts
+                          based on the choices / requests they make in their methods
+************************************************************************/
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -17,13 +29,18 @@ class FitnessAssistant extends AIAssistant {
     }
 
     @Override
+    // same documenation purposes as in AIAssistant, simply meant to greet the user in a unique way (hence the override)
     protected void greetUser() {
         System.out.println("\nGreat day for a workout, " + activeUser.getName());
     }
 
     /**************************
      * function: recommendWorkout
-     * 
+     * purpose: will recommend a workout from an existing String[][] variable that can depend on user request and/or user
+     *          preferences (if they exist); is called by the AIAssistant class when a user requests that they want a
+     *          workout recommended
+     * parameters: none
+     * return type: void; prints the workout recommended based on user input / preferences
      *************************/
     protected void recommendWorkout() {
         Scanner sc = new Scanner(System.in);
@@ -51,6 +68,7 @@ class FitnessAssistant extends AIAssistant {
         }
 
         String pickedWorkout;
+        // filters through each possible choice the user can make for workout type
         switch (choice) {
             case "UPPER BODY" -> {
                 pickedWorkout = this.getWorkout(0);
@@ -87,7 +105,10 @@ class FitnessAssistant extends AIAssistant {
 
     /**************************
      * function: getWorkout
-     * 
+     * purpose: fetches the workout from the String[][] categorizedWorkouts variable randomly, 
+     *          utilizing the built-in java import Random()
+     * parameter: int indexOfWorkoutCategory, the row in which the workout type the user picked is found (predetermined)
+     * return type: String, the wokrout found within the array found at the specified index
      *************************/
     private String getWorkout(int indexOfWorkoutCategory) {
         Random r = new Random();
@@ -97,7 +118,10 @@ class FitnessAssistant extends AIAssistant {
 
     /**************************
      * function: getWorkoutCategoryByPreference
-     * 
+     * purpose: goes to the UserProfile's variable preference, searches by the key Workout Types, and picks a random
+     *          workout type preference found within the ArrayList found at that key
+     * parameter: none
+     * return type: String, the workout type found at a random point in the UserProfile's variable preferences
      *************************/
     private String getWorkoutCategoryByPreference() {
         if (!this.getCurrentUser().getPreferences("Workout Types").isEmpty()) {
