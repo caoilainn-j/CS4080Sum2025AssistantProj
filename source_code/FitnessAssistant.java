@@ -16,11 +16,16 @@ import java.util.Scanner;
 class FitnessAssistant extends AIAssistant {
     // categorized workout list based on part of body, represented by 2-D String Array 
     final static String[][] categorizedWorkouts = {
-        {"Work1", "Work2", "Work3", "Work4", "Work5"},
-        {"Work6", "Work7", "Work8", "Work9", "Work10"},
-        {"Work11", "Work12", "Work13", "Work14", "Work15"},
-        {"Work16", "Work17", "Work18", "Work19", "Work20"},
-        {"Work21", "Work22", "Work23", "Work24", "Work25"}
+        // upper body workouts
+        {"bicep curls", "lateral raises", "lower back rows", "chest press", "tricep pulldowns"},
+        // lower body workouts
+        {"bulgarain split squats", "calf raises", "romanian deadlifts", "lunges", "goblet squats"},
+        // abdominal workouts
+        {"dit-ups", "planks", "leg raises", "russian twists", "dead bugs"},
+        // full body workouts
+        {"deadlifts", "mountain climbers", "burpees", "jumping jacks", "hanging leg raises"},
+        // cardio workouts
+        {"the Stairmaster", "the Elliptical", "1 mile run", "sprints", "12 - 3 - 30 incline"}
     };
 
     // constructor for FitnessAssistant Object
