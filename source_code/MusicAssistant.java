@@ -17,15 +17,20 @@ class MusicAssistant extends AIAssistant {
     // categorized song list based on genre, represented by 2-D String Array
     final static private String [][] categorizedSongs = {
         // "pop" category
-        {"Song1", "Song2", "Song3", "Song4", "Song5"},
+        {"Pink Pony Club - Chappell Roan", "Busy Woman - Sabrina Carpenter", "Beautiful Things - Benson Boone", 
+        "BIRDS OF A FEATHER - Billie Eilish", "Houdini - Dua Lipa"},
         // "rock" category
-        {"Song6", "Song7", "Song8", "Song9", "Song10"},
+        {"Californication - Red Hot Chili Peppers", "Stairway to Heaven - Led Zepplin", "Smells Like Teen Spirit - Nirvana", 
+        "Hotel California - the Eagles", "Back in Black - AC/DC"},
         // "country" category
-        {"Song11", "Song12", "Song13", "Song14", "Song15"},
+        {"A Bar Song (Tipsy) - Shaboozey", "I Got Better - Morgan Wallen", "TEXAS HOLD 'EM - Beyonce", 
+        "The Giver - Chappell Roan", "Liar - Jelly Roll"},
         // "rap" category
-        {"Song16", "Song17", "Song18", "Song19", "Song20"},
+        {"GNX - Kendrick Lamar", "Hot in Herre - Nelly", "All of the Lights - Kanye West",
+         "Lollipop - Lil Wayne", "INDUSTRY BABY - Lil Nas X"},
         // "electronic" category
-        {"Song21", "Song22", "Song23", "Song24", "Song25"}
+        {"Club Classics - Charli XCX", "YOLO - HorsegiirL", "Swine - Lady Gaga", 
+        "Faceshopping - SOPHIE", "Bodyology - Snow Wife"}
     };
 
     // constructor for MusicAssistant Object
