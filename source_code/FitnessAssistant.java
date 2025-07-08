@@ -21,7 +21,7 @@ class FitnessAssistant extends AIAssistant {
         // lower body workouts
         {"bulgarain split squats", "calf raises", "romanian deadlifts", "lunges", "goblet squats"},
         // abdominal workouts
-        {"dit-ups", "planks", "leg raises", "russian twists", "dead bugs"},
+        {"sit-ups", "planks", "leg raises", "russian twists", "dead bugs"},
         // full body workouts
         {"deadlifts", "mountain climbers", "burpees", "jumping jacks", "hanging leg raises"},
         // cardio workouts
